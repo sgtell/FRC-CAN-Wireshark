@@ -16,7 +16,12 @@ static const value_string manufacturers[] =
 	{ 0x08, "Team Use" },
 	{ 0x09, "Kauai Labs" },
 	{ 0x0a, "Copperforge" },
-	{ 0x0b, "PWF" }
+	{ 0x0b, "PWF" },
+	{ 0x0c, "Studica" },
+	{ 0x0d, "The Thrifty Bot" },
+	{ 0x0e, "Redux" },
+	{ 0x0f, "AndyMark" },
+	{ 0x10, "Vivid" }
 };
 
 static const value_string device_types[] =
@@ -32,6 +37,7 @@ static const value_string device_types[] =
 	{ 0x08, "Power Distribution" },
 	{ 0x09, "Pnuematics" },
 	{ 0x0a, "Miscellaneous" },
+	{ 0x0b, "IO Breakout" },
 	{ 0x1f, "Firmware Update" }
 };
 

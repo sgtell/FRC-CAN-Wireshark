@@ -1,0 +1,53 @@
+#!/bin/sh
+
+if test $# -eq 0
+then
+	echo "usage $0 wireshark-source-directory" 2>&1
+	exit 1
+fi
+
+TOT=$1
+here=$(/bin/pwd)
+
+if [ ! -f $TOT/WiresharkConfig.cmake.in ]
+then
+
+	echo "$TOT/WiresharkConfig.cmake.in not found" 2>&1
+	echo "usage $0 wireshark-source-directory" 2>&1
+	exit 1
+fi
+
+if [ ! -f ./Wireshark-Plugin/FRC-CAN/base/packet-frccan.c ]
+then
+	echo "./Wireshark-Plugin/FRC-CAN/base/packet-frccan.c" 2>&1
+	echo "run from top of FRC-CAN plugin tree" 2>&1
+fi
+
+set -x
+
+mkdir -p $TOT/canplugins
+cd $TOT/canplugins
+ln -sf $here FRC-CAN-Wireshark
+
+cd $TOT
+
+if [  -f  CMakeListsCustom.txt ]
+then
+    cp CMakeListsCustom.txt CMakeListsCustom.txt.old
+else
+    cp CMakeListsCustom.txt.example CMakeListsCustom.txt 
+fi
+
+# cp CMakeListsCustom.txt.example CMakeListsCustom.txt || exit 1
+
+cat > CMakeListsCustom.txt.add << EOT
+set(CUSTOM_PLUGIN_SRC_DIR
+        canplugins/FRC-CAN-Wireshark/Wireshark-Plugin/FRC-CAN/base
+        canplugins/FRC-CAN-Wireshark/Wireshark-Plugin/FRC-CAN/CTRE
+)
+
+EOT
+
+# TODO script this
+echo "edit CMakeListsCustom.txt to insert contents of CMakeListsCustom.txt.add"
+
